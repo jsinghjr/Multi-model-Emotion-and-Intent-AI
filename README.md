@@ -66,7 +66,7 @@ The trained audio model is **not included** in this repository due to GitHub siz
 ### 📥 Download Model
 
 Download from:
-👉 **[PASTE YOUR GOOGLE DRIVE LINK HERE]**
+👉 https://drive.google.com/drive/folders/1AYoAJMf2jvOOVNOXRVbAAMGMR7XljtzG?usp=drive_link
 
 ---
 
