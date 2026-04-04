@@ -1,4 +1,4 @@
-# 🎯 Multi-Modal Emotion and Intent AI
+# Multimodal Emotion AI Project
 
 An AI-based system that detects human emotions using **multiple modalities** — audio, facial expressions, and text — and combines them to produce a more accurate and robust prediction.
 
