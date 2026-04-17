@@ -1,21 +1,60 @@
-
-venv/
-venv312/
-
+# ---------------------------
+# Python cache
+# ---------------------------
 __pycache__/
 *.pyc
-*.pyo
 
+# ---------------------------
+# Environment files
+# ---------------------------
+.env
 
-*.pkl
-*.pt
-
-
-train/
-test/
-
+# ---------------------------
+# VS Code
+# ---------------------------
 .vscode/
 
-
+# ---------------------------
+# OS files
+# ---------------------------
 .DS_Store
-Thumbs.db
+
+# ---------------------------
+# DATASETS (inside audio_model)
+# ---------------------------
+audio_model/Data/
+
+# ---------------------------
+# Uploaded / temp files
+# ---------------------------
+uploads/
+*.wav
+*.mp3
+
+# ---------------------------
+# Cache / temp files
+# ---------------------------
+audio_model/audio_cache.pkl
+*.pkl
+
+# ---------------------------
+# Model weights (old formats)
+# ---------------------------
+*.pth
+*.h5
+
+# ---------------------------
+# Logs
+# ---------------------------
+*.log
+
+# ---------------------------
+# KEEP THIS (IMPORTANT)
+# ---------------------------
+audio_model/emotion_model_fast/
+
+*.pt
+*.pth
+emotion_model_fast/
+__pycache__/
+*.pyc

@@ -27,14 +27,55 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
+
+# 🔗 NEW FUNCTION (fusion-ready)
+def get_face_emotion():
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+    )
+
+    cap = cv2.VideoCapture(0)
+    print("📷 Capturing face...")
+
+    ret, frame = cap.read()
+    cap.release()
+
+    if not ret:
+        return "neutral", 0.0
+
+    gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+    if len(faces) == 0:
+        return "neutral", 0.0
+
+    # take first detected face
+    (x, y, w, h) = faces[0]
+
+    roi = cv2.resize(gray[y:y+h, x:x+w], (224, 224))
+    tensor = transform(roi).unsqueeze(0).to(device)
+
+    with torch.no_grad():
+        probs      = torch.softmax(model(tensor), dim=1)[0]
+        pred_idx   = probs.argmax().item()
+        emotion    = CATEGORIES[pred_idx]
+        confidence = probs[pred_idx].item()
+
+    return emotion, confidence
+
+
+# 🟢 OPTIONAL: keep your old live demo
 def analyze_face():
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+    )
     cap = cv2.VideoCapture(0)
     print("AI Webcam Active. Press 'q' to quit.")
 
     while True:
         ret, frame = cap.read()
-        if not ret: break
+        if not ret:
+            break
 
         gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -61,5 +102,8 @@ def analyze_face():
     cap.release()
     cv2.destroyAllWindows()
 
+
 if __name__ == "__main__":
-    analyze_face()
+    # test single prediction
+    emotion, conf = get_face_emotion()
+    print(f"Detected Emotion: {emotion} ({conf:.2f})")

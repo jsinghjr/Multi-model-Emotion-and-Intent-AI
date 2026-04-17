@@ -1,5 +1,5 @@
 from transformers import pipeline
-from utils.preprocess import clean_text
+from text_model.utils.preprocess import clean_text
 
 # Pretrained on GoEmotions — all 28 labels, no training needed
 classifier = pipeline(
